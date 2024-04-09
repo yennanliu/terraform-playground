@@ -6,7 +6,7 @@ module "vpc" {
 
 	name            = "${var.cluster_name}-vpc"
 	cidr            = "10.2.0.0/16"
-	azs             = ["us-east-1a", "us-east-1d"]
+	azs             = ["eu-west-1a"] #["us-east-1a", "us-east-1d"]
 	private_subnets = ["10.2.64.0/20", "10.2.128.0/20"]
 	public_subnets  = ["10.2.16.0/20", "10.2.32.0/20"]
 

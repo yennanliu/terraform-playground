@@ -23,9 +23,11 @@ docker buildx build --platform linux/amd64 -t $account_id.dkr.ecr.eu-west-1.amaz
 
 # force new deploy
 
+
 aws ecs update-service --cluster $cluster_name --service nginx-service --force-new-deployment
 
-ate-service --cluster $cluster_name --service php-service --force-new-deployment
+aws ecs update-service --cluster $cluster_name --service php-service --force-new-deployment
+
 
 # deploy
 
