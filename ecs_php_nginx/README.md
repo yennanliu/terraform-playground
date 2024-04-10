@@ -6,14 +6,18 @@
 
 terraform init
 
-# populate var
-terraform apply -var-file="dev.tfvars"
-
 export account_id=
 export cluster_name=yen-test
 
+
+# populate var and deploy
+terraform apply -var-file="dev.tfvars"
+
+
 # login ECR
 aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $account_id.dkr.ecr.eu-west-1.amazonaws.com
+
+
 
 # build docker img
 docker buildx build --platform linux/amd64 -t $account_id.dkr.ecr.eu-west-1.amazonaws.com/yen-nginx:latest --push ./docker-nginx

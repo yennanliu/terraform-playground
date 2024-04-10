@@ -1,6 +1,6 @@
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-	name = "ecs_task_execution_role"
+	name = "ecs_task_execution_role_yen_test"
 
 	assume_role_policy = jsonencode({
 		Version = "2012-10-17"
@@ -28,7 +28,7 @@ resource "aws_iam_role_policy_attachment" "ecs_logging_policy_attachment" {
 }
 
 resource "aws_iam_policy" "ecs_logging_policy" {
-	name        = "ecs_logging_policy"
+	name        = "ecs_logging_policy_yen_test"
 	description = "Allows ECS tasks to send logs to CloudWatch"
 
 	policy = jsonencode({
