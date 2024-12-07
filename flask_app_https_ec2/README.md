@@ -12,14 +12,10 @@ terraform plan
 
 terraform apply
 
-# var.key_name
-#   Name of the SSH key pair
 
-#   Enter a value: xxxx.pem
+# Auth for terraform via below 
 
-# var.path_to_key
-#   Path to your SSH private key
-
-#   Enter a value: /Users/yennanliu/Downloads
+# export AWS_SECRET_ACCESS_KEY=
+# export AWS_ACCESS_KEY_ID=
 ```
 
