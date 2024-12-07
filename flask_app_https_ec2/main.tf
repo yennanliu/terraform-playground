@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "flask_app" {
-  ami           = "ami-08d4ac5b634553e16"  # Amazon Linux 2 AMI
+  ami           = "ami-04e914639d0cca79a"  # Amazon Linux 2 AMI
   instance_type = "t2.micro"               # Choose an appropriate instance type
   key_name      = var.key_name
 
