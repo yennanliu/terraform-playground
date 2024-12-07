@@ -8,5 +8,7 @@ chmod +x flask_setup.sh
 
 terraform init
 
+terraform plan
+
 terraform apply
 ```
