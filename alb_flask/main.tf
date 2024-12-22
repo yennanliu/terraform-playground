@@ -13,14 +13,27 @@ resource "aws_vpc" "main" {
   }
 }
 
-# Subnets
-resource "aws_subnet" "public_subnet" {
+# Subnet 1 (Public)
+resource "aws_subnet" "public_subnet_1" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.1.0/24"
+  cidr_block              = "10.0.10.0/24"  # Changed CIDR block
+  availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "PublicSubnet"
+    Name = "PublicSubnet1"
+  }
+}
+
+# Subnet 2 (Public)
+resource "aws_subnet" "public_subnet_2" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.20.0/24"  # Changed CIDR block
+  availability_zone       = "us-east-1b"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "PublicSubnet2"
   }
 }
 
@@ -48,8 +61,13 @@ resource "aws_route_table" "public_route_table" {
 }
 
 # Associate Route Table
-resource "aws_route_table_association" "public_association" {
-  subnet_id      = aws_subnet.public_subnet.id
+resource "aws_route_table_association" "public_association_1" {
+  subnet_id      = aws_subnet.public_subnet_1.id
+  route_table_id = aws_route_table.public_route_table.id
+}
+
+resource "aws_route_table_association" "public_association_2" {
+  subnet_id      = aws_subnet.public_subnet_2.id
   route_table_id = aws_route_table.public_route_table.id
 }
 
@@ -106,7 +124,7 @@ resource "aws_security_group" "alb_sg" {
 resource "aws_instance" "flask_instance" {
   ami           = "ami-08d4ac5b634553e16" # Amazon Linux 2 AMI
   instance_type = "t2.micro"
-  subnet_id     = aws_subnet.public_subnet.id
+  subnet_id     = aws_subnet.public_subnet_1.id
   security_groups = [aws_security_group.flask_sg.name]
 
   user_data = file("flask_setup.sh")
@@ -122,7 +140,7 @@ resource "aws_lb" "app_lb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
-  subnets            = [aws_subnet.public_subnet.id]
+  subnets            = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
 
   tags = {
     Name = "FlaskALB"
